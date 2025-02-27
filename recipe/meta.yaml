@@ -1,32 +1,36 @@
-{% set version = "0.16.10" %}
-
+{% set version = "0.23.10" %}
 
 package:
   name: awscrt
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/a/awscrt/awscrt-{{ version }}.tar.gz
-  sha256: 3101499b479b82f0403f615bf520c1f8b9506818d275e3e28ade25cc6bcdb92b
+  url: https://pypi.org/packages/source/a/awscrt/awscrt-{{ version }}.tar.gz
+  sha256: 3394be3eb699099a6bcd7d8a72c0310f5572e18d88b303569256730be8878f0e
   patches:
     - 0001-Don-t-force-static-linkage.patch
 
 build:
-  number: 2
+  number: 0
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - python
     - {{ compiler('c') }}
+    - patch     # [not win]
+    - m2-patch  # [win]
   host:
     - python
     - pip
+    - setuptools
+    - wheel
     - s2n  # [linux]
-    - aws-checksums
     - aws-c-common
+    - aws-c-sdkutils
     - aws-c-cal
     - aws-c-io
+    - aws-checksums
+    - aws-c-compression
     - aws-c-event-stream
     - aws-c-http
     - aws-c-auth
@@ -52,6 +56,5 @@ about:
 
 extra:
   recipe-maintainers:
-    - h-vetinari
     - ocefpaf
     - xhochy
