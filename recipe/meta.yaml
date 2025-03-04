@@ -1,4 +1,4 @@
-{% set version = "0.23.10" %}
+{% set version = "0.23.8" %}
 
 package:
   name: awscrt
@@ -6,9 +6,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/a/awscrt/awscrt-{{ version }}.tar.gz
-  sha256: 3394be3eb699099a6bcd7d8a72c0310f5572e18d88b303569256730be8878f0e
+  sha256: cba55f3ee80ea3192a0a24e84caad778570250800a59d29ef9efbcd4d1612f2f
   patches:
-    - 0001-Don-t-force-static-linkage.patch
+    - patches/0001-Don-t-force-static-linkage.patch
+    - patches/0002_add_aws_auth_header.patch
 
 build:
   number: 0
