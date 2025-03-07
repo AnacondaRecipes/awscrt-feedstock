@@ -24,7 +24,7 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - s2n  # [linux]
+    - s2n 1.5.14  # [linux]
     - aws-c-common 0.11.1
     - aws-c-sdkutils 0.2.3
     - aws-c-cal 0.8.5
@@ -51,8 +51,12 @@ test:
 about:
   home: https://github.com/awslabs/aws-crt-python
   summary: A common runtime for AWS Python projects
+  description: Python 3 bindings for the AWS Common Runtime.
   license: Apache-2.0
   license_file: LICENSE
+  license_family: Apache
+  doc_url: https://github.com/awslabs/aws-crt-python
+  dev_url: https://github.com/awslabs/aws-crt-python
 
 extra:
   recipe-maintainers:
