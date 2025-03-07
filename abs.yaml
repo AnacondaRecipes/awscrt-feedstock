@@ -11,3 +11,4 @@ channels:
   - https://staging.continuum.io/prefect/fs/aws-c-event-stream-feedstock/pr4/c214110
   - https://staging.continuum.io/prefect/fs/aws-c-mqtt-feedstock/pr2/5aa324c
   - https://staging.continuum.io/prefect/fs/aws-c-s3-feedstock/pr2/7247749
+  - https://staging.continuum.io/prefect/fs/s2n-feedstock/pr2/9f12ab9
