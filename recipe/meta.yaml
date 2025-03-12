@@ -1,37 +1,42 @@
-{% set version = "0.16.10" %}
-
+{% set version = "0.23.8" %}
 
 package:
   name: awscrt
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/a/awscrt/awscrt-{{ version }}.tar.gz
-  sha256: 3101499b479b82f0403f615bf520c1f8b9506818d275e3e28ade25cc6bcdb92b
+  url: https://pypi.org/packages/source/a/awscrt/awscrt-{{ version }}.tar.gz
+  sha256: cba55f3ee80ea3192a0a24e84caad778570250800a59d29ef9efbcd4d1612f2f
   patches:
-    - 0001-Don-t-force-static-linkage.patch
+    - patches/0001-Don-t-force-static-linkage.patch
 
 build:
-  number: 2
+  number: 0
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - {{ compiler('c') }}
+    - patch     # [not win]
+    - m2-patch  # [win]
   host:
     - python
     - pip
-    - s2n  # [linux]
-    - aws-checksums
-    - aws-c-common
-    - aws-c-cal
-    - aws-c-io
-    - aws-c-event-stream
-    - aws-c-http
-    - aws-c-auth
-    - aws-c-mqtt
-    - aws-c-s3
+    - setuptools
+    - wheel
+    - s2n 1.5.14  # [linux]
+    - aws-c-common 0.11.1
+    - aws-c-sdkutils 0.2.3
+    - aws-c-cal 0.8.5
+    - aws-c-io 0.17.0
+    - aws-checksums 0.2.3
+    - aws-c-compression 0.3.1
+    - aws-c-event-stream 0.5.4
+    - aws-c-http 0.9.3
+    - aws-c-auth 0.8.5
+    - aws-c-mqtt 0.12.2
+    - aws-c-s3 0.7.11
   run:
     - python
 
@@ -47,11 +52,14 @@ test:
 about:
   home: https://github.com/awslabs/aws-crt-python
   summary: A common runtime for AWS Python projects
+  description: Python 3 bindings for the AWS Common Runtime.
   license: Apache-2.0
   license_file: LICENSE
+  license_family: Apache
+  doc_url: https://github.com/awslabs/aws-crt-python
+  dev_url: https://github.com/awslabs/aws-crt-python
 
 extra:
   recipe-maintainers:
-    - h-vetinari
     - ocefpaf
     - xhochy

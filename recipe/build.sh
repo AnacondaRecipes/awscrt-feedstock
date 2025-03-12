@@ -6,4 +6,4 @@ set -exuo pipefail
 rm -rf crt
 
 export AWS_C_INSTALL=$PREFIX
-$PYTHON -m pip install . -vv
+$PYTHON -m pip install . -vv --no-deps --no-build-isolation
