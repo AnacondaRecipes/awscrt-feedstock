@@ -1,17 +1,17 @@
-From 05f89159e12f4254e3a773daf618081831759d6e Mon Sep 17 00:00:00 2001
+From 93a5f548f2f4cc3e39824abef114403387798aec Mon Sep 17 00:00:00 2001
 From: Patryk Kups <pkups@anaconda.com>
-Date: Mon, 7 Jul 2025 16:31:45 +0200
-Subject: [PATCH] unvendor
+Date: Mon, 7 Jul 2025 16:43:56 +0200
+Subject: [PATCH] vendor
 
 ---
- crt/CMakeLists.txt | 99 +++++++---------------------------------------
- 1 file changed, 14 insertions(+), 85 deletions(-)
+ crt/CMakeLists.txt | 96 +++++++---------------------------------------
+ 1 file changed, 14 insertions(+), 82 deletions(-)
 
 diff --git a/crt/CMakeLists.txt b/crt/CMakeLists.txt
-index 965f110..adb1430 100644
+index 965f110..32e2593 100644
 --- a/crt/CMakeLists.txt
 +++ b/crt/CMakeLists.txt
-@@ -9,88 +9,17 @@ cmake_minimum_required(VERSION 3.9...3.31)
+@@ -9,88 +9,20 @@ cmake_minimum_required(VERSION 3.9...3.31)
  # We let setuptools handle that.
  project(aws-crt-dependencies)
  
@@ -78,7 +78,7 @@ index 965f110..adb1430 100644
 -
 -endif()
 -
--if(UNIX AND NOT APPLE)
+ if(UNIX AND NOT APPLE)
 -    # prebuild s2n-tls.
 -    aws_prebuild_dependency(
 -        DEPENDENCY_NAME S2N
@@ -87,8 +87,11 @@ index 965f110..adb1430 100644
 -            -DUNSAFE_TREAT_WARNINGS_AS_ERRORS=OFF
 -            -DBUILD_TESTING=OFF
 -    )
--endif()
--
++    # aws-lc is used as crypto lib for s2n
++    # our package using OpenSSL so skip aws-lc
++    find_package(s2n REQUIRED)
+ endif()
+ 
 -add_subdirectory(aws-c-common)
 -add_subdirectory(aws-c-sdkutils)
 -add_subdirectory(aws-c-cal)
@@ -100,9 +103,6 @@ index 965f110..adb1430 100644
 -add_subdirectory(aws-c-auth)
 -add_subdirectory(aws-c-mqtt)
 -add_subdirectory(aws-c-s3)
-+# aws-lc is used as crypto lib for s2n
-+# our package using OpenSSL so skip aws-lc
-+find_package(s2n REQUIRED)
 +find_package(aws-c-common REQUIRED)
 +find_package(aws-c-sdkutils REQUIRED)
 +find_package(aws-c-cal REQUIRED)
