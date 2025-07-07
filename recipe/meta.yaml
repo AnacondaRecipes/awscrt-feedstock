@@ -24,6 +24,7 @@ requirements:
     - {{ compiler('c') }}
     - patch  # [not win]
     - m2-patch  # [win]
+    - nasm  # [win]
   host:
     - python
     - pip
@@ -47,7 +48,7 @@ requirements:
 # RuntimeError: 7174 (AWS_ERROR_CAL_UNSUPPORTED_ALGORITHM): The specified algorithm is unsupported on this platform.
 # test_crypto.py
 
-# self.assertTrue(shutdown_event.wait(TIMEOUT))
+# RuntimeError: 1038 (AWS_IO_FILE_VALIDATION_FAILURE): A file was read and the input did not match the expected value
 # test_io.py
 
 test:
@@ -72,7 +73,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - python -m unittest discover -s test -v
+    - python -m unittest discover -s test -v  # [not osx]
   requires:
     - pip
     - websockets
