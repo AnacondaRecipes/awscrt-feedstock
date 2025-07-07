@@ -10,6 +10,7 @@ source:
   sha256: cb23cb767ca2e3c0007c899b289d668d28aeb055534df35a741847135f6cd91c
   patches:
     - patches/0001-Don-t-force-static-linkage.patch
+    - patches/0002-unvendor-aws-dependencies.patch
 
 build:
   number: 0
@@ -45,12 +46,6 @@ requirements:
   run:
     - python
 
-# RuntimeError: 7174 (AWS_ERROR_CAL_UNSUPPORTED_ALGORITHM): The specified algorithm is unsupported on this platform.
-# test_crypto.py
-
-# RuntimeError: 1038 (AWS_IO_FILE_VALIDATION_FAILURE): A file was read and the input did not match the expected value
-# test_io.py
-
 test:
   source_files:
     - test
@@ -73,10 +68,10 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - python -m unittest discover -s test -v  # [not osx]
+    - python -m unittest discover -s test -v
   requires:
     - pip
-    - websockets
+    - websockets >=13.1
 
 about:
   home: https://github.com/awslabs/aws-crt-python
