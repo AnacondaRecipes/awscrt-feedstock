@@ -14,7 +14,7 @@ source:
 build:
   number: 0
   skip: true  # [py<38]
-  # It is in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.27.4/setup.py#L220-L230
+  # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.27.4/setup.py#L220-L230
   ignore_run_exports:
     - aws-c-sdkutils
     - aws-c-compression
@@ -44,11 +44,11 @@ requirements:
   run:
     - python
 
-# RuntimeError: awscrt leak check failed. 1 NativeResource objects. 80 bytes native memory
-{% set tests_to_skip = "test_delegate_provider_exception" %}
 # RuntimeError: 7174 (AWS_ERROR_CAL_UNSUPPORTED_ALGORITHM): The specified algorithm is unsupported on this platform.
-# test/test_crypto.py::TestCredentials::test_ed25519_keygen
-{% set tests_to_skip = tests_to_skip + " or test_ed25519_keygen" %}  # [osx]
+# test_crypto.py
+
+# self.assertTrue(shutdown_event.wait(TIMEOUT))
+# test_io.py
 
 test:
   source_files:
@@ -72,9 +72,8 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -v -k "not ({{ tests_to_skip }})" test
+    - python -m unittest discover -s test -v
   requires:
-    - pytest
     - pip
     - websockets
 
