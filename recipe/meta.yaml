@@ -10,11 +10,14 @@ source:
   sha256: cb23cb767ca2e3c0007c899b289d668d28aeb055534df35a741847135f6cd91c
   patches:
     - patches/0001-Don-t-force-static-linkage.patch
-    - patches/0002-unvendor-aws-dependencies.patch
 
 build:
   number: 0
   skip: true  # [py<38]
+  script_env:
+    - AWS_CRT_BUILD_USE_SYSTEM_LIBS=1
+    - AWS_CRT_BUILD_USE_SYSTEM_LIBCRYPTO=1
+
   # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.27.4/setup.py#L220-L230
   ignore_run_exports:
     - aws-c-sdkutils
