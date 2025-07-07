@@ -17,6 +17,7 @@ build:
   script_env:
     - AWS_CRT_BUILD_USE_SYSTEM_LIBS=1
     - AWS_CRT_BUILD_USE_SYSTEM_LIBCRYPTO=1
+    - LIBCRYPTO_LIBNAME=libcrypto  # [win]
   # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.27.4/setup.py#L220-L230
   ignore_run_exports:
     - aws-c-sdkutils
