@@ -10,8 +10,8 @@ source:
   sha256: cb23cb767ca2e3c0007c899b289d668d28aeb055534df35a741847135f6cd91c
   patches:
     - patches/0001-Don-t-force-static-linkage.patch
-    # - patches/0002-disable-osx-failing-tests.patch  # [osx]
-    # - patches/0003-disable-win-failing-test.patch  # [win]
+    - patches/0002-disable-osx-failing-tests.patch  # [osx]
+    - patches/0003-disable-win-failing-test.patch  # [win]
 
 build:
   number: 0
@@ -20,8 +20,11 @@ build:
     # Unvendor AWS libs
     - AWS_CRT_BUILD_USE_SYSTEM_LIBS=1
     - AWS_CRT_BUILD_USE_SYSTEM_LIBCRYPTO=1
-    # Enable support for ed25519 on OSX and WIN
-    - AWS_CRT_BUILD_DISABLE_LIBCRYPTO_USE_FOR_ED25519_EVERYWHERE=1
+    # Cannot enable ed25519 with the current version of aws-c-cal 0.9.2
+    # This feature is currently experimental: https://github.com/awslabs/aws-c-cal/blob/v0.9.2/CMakeLists.txt#L13
+    # ed25519 tests are disabled using patch on OSX and WIN 
+    # - AWS_CRT_BUILD_DISABLE_LIBCRYPTO_USE_FOR_ED25519_EVERYWHERE=1
+
   # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.27.4/setup.py#L220-L230
   ignore_run_exports:
     - aws-c-sdkutils
