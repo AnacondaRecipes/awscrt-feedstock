@@ -33,9 +33,8 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    - patch  # [not win]
-    - m2-patch  # [win]
   host:
     - python
     - pip
