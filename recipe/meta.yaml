@@ -45,14 +45,14 @@ requirements:
     - aws-c-common 0.12.6
     - aws-c-sdkutils 0.2.4
     - aws-c-cal 0.9.13
-    - aws-c-io 0.23.3
-    - aws-checksums 0.2.8
-    - aws-c-compression 0.3.1
-    - aws-c-event-stream 0.5.9
-    - aws-c-http 0.10.7
-    - aws-c-auth 0.9.4
-    - aws-c-mqtt 0.13.3
-    - aws-c-s3 0.11.3
+    - aws-c-io 0.26.3
+    - aws-checksums 0.2.10
+    - aws-c-compression 0.3.2
+    - aws-c-event-stream 0.6.1
+    - aws-c-http 0.10.13
+    - aws-c-auth 0.10.1
+    - aws-c-mqtt 0.15.2
+    - aws-c-s3 0.12.0
   run:
     - python
 
