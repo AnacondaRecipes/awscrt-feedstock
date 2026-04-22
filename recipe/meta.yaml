@@ -1,5 +1,5 @@
 {% set name = "awscrt" %}
-{% set version = "0.30.0" %}
+{% set version = "0.32.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/a/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e1a133430e71116e9c0f101b0d11227f47b7c561ad5303f5af00f6c33a16f382
+  sha256: 92e749fce6c61da8db1af0baa6b7e96f7acf8a5574760b3d7880d190cedee8a0
   patches:
     - patches/0001-Don-t-force-static-linkage.patch
     - patches/0002-disable-osx-failing-tests.patch  # [osx]
@@ -45,14 +45,14 @@ requirements:
     - aws-c-common 0.12.6
     - aws-c-sdkutils 0.2.4
     - aws-c-cal 0.9.13
-    - aws-c-io 0.23.3
-    - aws-checksums 0.2.8
-    - aws-c-compression 0.3.1
-    - aws-c-event-stream 0.5.9
-    - aws-c-http 0.10.7
-    - aws-c-auth 0.9.4
-    - aws-c-mqtt 0.13.3
-    - aws-c-s3 0.11.3
+    - aws-c-io 0.26.3
+    - aws-checksums 0.2.10
+    - aws-c-compression 0.3.2
+    - aws-c-event-stream 0.6.1
+    - aws-c-http 0.10.13
+    - aws-c-auth 0.10.1
+    - aws-c-mqtt 0.15.2
+    - aws-c-s3 0.12.0
   run:
     - python
 
