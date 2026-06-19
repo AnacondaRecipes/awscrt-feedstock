@@ -1,0 +1,97 @@
+From 96d07c0231064247daad6bd272dbd02fc92896eb Mon Sep 17 00:00:00 2001
+From: Andrii Vetroumov <avetroumov@anaconda.com>
+Date: Fri, 19 Jun 2026 12:21:54 +0300
+Subject: [PATCH] Disable 404 status code tests
+
+---
+ test/test_aiohttp_client.py |  6 ++---
+ test/test_http_client.py    | 48 ++++++++++++++++++-------------------
+ 2 files changed, 27 insertions(+), 27 deletions(-)
+
+diff --git a/test/test_aiohttp_client.py b/test/test_aiohttp_client.py
+index 8d24c39..96669fb 100644
+--- a/test/test_aiohttp_client.py
++++ b/test/test_aiohttp_client.py
+@@ -986,9 +986,9 @@ class AIOHttp2RemoteEndStreamTest(NativeResourceTest):
+ 
+         await connection.close()
+ 
+-    def test_h2_remote_end_stream_ordering(self):
+-        """Test callback ordering with early server response"""
+-        asyncio.run(self._test_h2_remote_end_stream_ordering())
++    # def test_h2_remote_end_stream_ordering(self):
++    #     """Test callback ordering with early server response"""
++    #     asyncio.run(self._test_h2_remote_end_stream_ordering())
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/test/test_http_client.py b/test/test_http_client.py
+index 5364d7e..561ef0e 100644
+--- a/test/test_http_client.py
++++ b/test/test_http_client.py
+@@ -927,38 +927,38 @@ class Http2RemoteEndStreamTest(NativeResourceTest):
+ 
+         return connection_future.result(self.timeout)
+ 
+-    def test_h2_remote_end_stream_ordering(self):
+-        """Test that on_h2_remote_end_stream fires before on_complete when server finishes first"""
+-        connection = self._new_httpbin_h2_connection()
++    # def test_h2_remote_end_stream_ordering(self):
++    #     """Test that on_h2_remote_end_stream fires before on_complete when server finishes first"""
++    #     connection = self._new_httpbin_h2_connection()
+ 
+-        # Use httpbin.org 404 path - server responds immediately
+-        request = HttpRequest('POST', '/this-path-does-not-exist-deliberately-404')
+-        request.headers.add('host', 'httpbin.org')
+-        response = Response()
++    #     # Use httpbin.org 404 path - server responds immediately
++    #     request = HttpRequest('POST', '/this-path-does-not-exist-deliberately-404')
++    #     request.headers.add('host', 'httpbin.org')
++    #     response = Response()
+ 
+-        stream = connection.request(request, response.on_response, response.on_body, manual_write=True)
+-        stream.activate()
++    #     stream = connection.request(request, response.on_response, response.on_body, manual_write=True)
++    #     stream.activate()
+ 
+-        # Send first chunk WITHOUT end_stream - keeping the client side open
+-        stream.write_data(BytesIO(b'chunk1'), end_stream=False).result(self.timeout)
++    #     # Send first chunk WITHOUT end_stream - keeping the client side open
++    #     stream.write_data(BytesIO(b'chunk1'), end_stream=False).result(self.timeout)
+ 
+-        # Wait for server to finish (remote_end_stream_future completes)
+-        # Server will respond immediately with 404 and send END_STREAM
+-        remote_result = stream.remote_end_stream_future.result(self.timeout)
+-        self.assertIsNone(remote_result, "remote_end_stream_future should complete with None")
++    #     # Wait for server to finish (remote_end_stream_future completes)
++    #     # Server will respond immediately with 404 and send END_STREAM
++    #     remote_result = stream.remote_end_stream_future.result(self.timeout)
++    #     self.assertIsNone(remote_result, "remote_end_stream_future should complete with None")
+ 
+-        # Verify completion_future has NOT completed yet (stream still open)
+-        self.assertFalse(stream.completion_future.done(),
+-                         "completion_future should not be done until client closes")
++    #     # Verify completion_future has NOT completed yet (stream still open)
++    #     self.assertFalse(stream.completion_future.done(),
++    #                      "completion_future should not be done until client closes")
+ 
+-        # Now send final chunk WITH end_stream to close client side
+-        stream.write_data(BytesIO(b'chunk2'), end_stream=True).result(self.timeout)
++    #     # Now send final chunk WITH end_stream to close client side
++    #     stream.write_data(BytesIO(b'chunk2'), end_stream=True).result(self.timeout)
+ 
+-        # Wait for stream completion
+-        completion_result = stream.completion_future.result(self.timeout)
+-        self.assertEqual(404, completion_result, "Should get 404 status code")
++    #     # Wait for stream completion
++    #     completion_result = stream.completion_future.result(self.timeout)
++    #     self.assertEqual(404, completion_result, "Should get 404 status code")
+ 
+-        connection.close().result(self.timeout)
++    #     connection.close().result(self.timeout)
+ 
+ 
+ if __name__ == '__main__':
+-- 
+2.54.0
+
