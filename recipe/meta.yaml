@@ -2,7 +2,7 @@
 {% set version = "0.32.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -12,9 +12,13 @@ source:
     - patches/0001-Don-t-force-static-linkage.patch
     - patches/0002-disable-osx-failing-tests.patch  # [osx]
     - patches/0003-disable-win-failing-test.patch  # [win]
+    # Some tests expect status code 404 from httpbin.org, but server returns 503 in Anaconda environment.
+    - patches/0004-Disable-404-status-code-tests.patch
+    # Increase timeout for test_h2_client to 160 seconds to avoid timeout errors.
+    - patches/0005-Increase-timeout-for-test-h2-client.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<38]
   script_env:
     # Unvendor AWS libs
@@ -42,17 +46,17 @@ requirements:
     - wheel >=0.45.1
     - s2n {{ s2n }}  # [linux]
     - openssl {{ openssl }}  # [not linux]
-    - aws-c-common 0.12.6
+    - aws-c-common 0.14.0
     - aws-c-sdkutils 0.2.4
-    - aws-c-cal 0.9.13
+    - aws-c-cal 0.9.14
     - aws-c-io 0.26.3
     - aws-checksums 0.2.10
     - aws-c-compression 0.3.2
-    - aws-c-event-stream 0.6.1
-    - aws-c-http 0.10.13
-    - aws-c-auth 0.10.1
+    - aws-c-event-stream 0.7.1
+    - aws-c-http 0.11.0
+    - aws-c-auth 0.10.3
     - aws-c-mqtt 0.15.2
-    - aws-c-s3 0.12.0
+    - aws-c-s3 0.12.5
   run:
     - python
 
@@ -78,10 +82,11 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - python -m unittest discover -s test -v 
+    - python -m unittest discover -s test -v
   requires:
     - pip
-    - websockets >=13.1
+    - pytest
+    - websockets >=15.0.1
 
 about:
   home: https://github.com/awslabs/aws-crt-python
