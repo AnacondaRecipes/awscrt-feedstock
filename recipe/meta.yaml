@@ -1,24 +1,23 @@
 {% set name = "awscrt" %}
-{% set version = "0.32.0" %}
+{% set version = "0.34.1" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/a/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 92e749fce6c61da8db1af0baa6b7e96f7acf8a5574760b3d7880d190cedee8a0
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a3ae8e35c3a3eefdb2a15859887a05b926d0456d21ccba1b49861cfe46bcc8c2
   patches:
-    - patches/0001-Don-t-force-static-linkage.patch
-    - patches/0002-disable-osx-failing-tests.patch  # [osx]
-    - patches/0003-disable-win-failing-test.patch  # [win]
+    - patches/0001-disable-osx-failing-tests.patch  # [osx]
+    - patches/0002-disable-win-failing-test.patch  # [win]
     # Some tests expect status code 404 from httpbin.org, but server returns 503 in Anaconda environment.
-    - patches/0004-Disable-404-status-code-tests.patch
+    - patches/0003-Disable-404-status-code-tests.patch
     # Increase timeout for test_h2_client to 160 seconds to avoid timeout errors.
-    - patches/0005-Increase-timeout-for-test-h2-client.patch
+    - patches/0004-Increase-timeout-for-test-h2-client.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py<38]
   script_env:
     # Unvendor AWS libs
@@ -44,7 +43,7 @@ requirements:
     - pip
     - setuptools >=75.3.1
     - wheel >=0.45.1
-    - s2n {{ s2n }}  # [linux]
+    - s2n {{ s2n }}  # [not win]
     - openssl {{ openssl }}  # [not linux]
     - aws-c-common 0.14.0
     - aws-c-sdkutils 0.2.4
