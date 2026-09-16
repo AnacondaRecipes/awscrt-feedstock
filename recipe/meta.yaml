@@ -17,7 +17,7 @@ source:
     - patches/0004-Increase-timeout-for-test-h2-client.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<38]
   script_env:
     # Unvendor AWS libs
