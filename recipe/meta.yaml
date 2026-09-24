@@ -1,5 +1,5 @@
 {% set name = "awscrt" %}
-{% set version = "0.34.1" %}
+{% set version = "0.36.2" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a3ae8e35c3a3eefdb2a15859887a05b926d0456d21ccba1b49861cfe46bcc8c2
+  sha256: 6a6ad171cc3bb2763fb006c9c5c1c3df85d9c1d30b2ca0908ce539e5ee694629
   patches:
     - patches/0001-disable-osx-failing-tests.patch  # [osx]
     - patches/0002-disable-win-failing-test.patch  # [win]
@@ -17,7 +17,7 @@ source:
     - patches/0004-Increase-timeout-for-test-h2-client.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py<38]
   script_env:
     # Unvendor AWS libs
@@ -42,20 +42,19 @@ requirements:
     - python
     - pip
     - setuptools >=75.3.1
-    - wheel >=0.45.1
     - s2n {{ s2n }}  # [not win]
     - openssl {{ openssl }}  # [not linux]
-    - aws-c-common 0.14.0
-    - aws-c-sdkutils 0.2.4
-    - aws-c-cal 0.9.14
-    - aws-c-io 0.26.3
+    - aws-c-common 0.14.5
+    - aws-c-sdkutils 0.2.9
+    - aws-c-cal 0.9.15
+    - aws-c-io 0.27.6
     - aws-checksums 0.2.10
     - aws-c-compression 0.3.2
     - aws-c-event-stream 0.7.1
     - aws-c-http 0.11.0
-    - aws-c-auth 0.10.3
-    - aws-c-mqtt 0.15.2
-    - aws-c-s3 0.12.5
+    - aws-c-auth 0.10.4
+    - aws-c-mqtt 0.16.1
+    - aws-c-s3 0.13.5
   run:
     - python
 
