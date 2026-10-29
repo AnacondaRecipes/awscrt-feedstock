@@ -1,5 +1,5 @@
 {% set name = "awscrt" %}
-{% set version = "0.37.0" %}
+{% set version = "0.38.0" %}
 
 package:
   name: {{ name }}
@@ -28,7 +28,7 @@ build:
     # ed25519 tests are disabled using patch on OSX and WIN 
     # - AWS_CRT_BUILD_DISABLE_LIBCRYPTO_USE_FOR_ED25519_EVERYWHERE=1
 
-  # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.37.0/setup.py#L310
+  # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.38.0/setup.py#L341
   ignore_run_exports:
     - aws-c-sdkutils
     - aws-c-compression
@@ -44,17 +44,17 @@ requirements:
     - setuptools >=75.3.1
     - s2n {{ s2n }}  # [not win]
     - openssl {{ openssl }}  # [not linux]
-    - aws-c-common 1.0.1
+    - aws-c-common 1.0.3
     - aws-c-sdkutils 1.0.0
     - aws-c-cal 1.0.0
-    - aws-c-io 1.0.0
-    - aws-checksums 1.0.0
+    - aws-c-io 1.1.0
+    - aws-checksums 1.0.1
     - aws-c-compression 1.0.0
     - aws-c-event-stream 1.0.0
-    - aws-c-http 1.0.0
+    - aws-c-http 1.1.1
     - aws-c-auth 1.0.0
-    - aws-c-mqtt 1.0.0
-    - aws-c-s3 1.2.0
+    - aws-c-mqtt 1.1.2
+    - aws-c-s3 1.3.0
   run:
     - python
 
