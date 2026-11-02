@@ -1,0 +1,2 @@
+c_compiler: # [win and arm64]
+  - clang # [win and arm64]
