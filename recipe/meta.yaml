@@ -1,5 +1,5 @@
 {% set name = "awscrt" %}
-{% set version = "0.37.0" %}
+{% set version = "0.38.0" %}
 
 package:
   name: {{ name }}
@@ -7,14 +7,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9e2ddadc609084b5f60affb8b87e77304fed64e271e2b2b7558186cf65d81e5a
+  sha256: 4a8423c4a76390c6e5c4f386e3e367dccdcf67d6d1a0bc1c59776bb14cdc2ad9
   patches:
     - patches/0001-disable-osx-failing-tests.patch  # [osx]
     - patches/0002-disable-win-failing-test.patch  # [win]
-    # Some tests expect status code 404 from httpbin.org, but server returns 503 in Anaconda environment.
-    - patches/0003-Disable-404-status-code-tests.patch
     # Increase timeout for test_h2_client to 160 seconds to avoid timeout errors.
-    - patches/0004-Increase-timeout-for-test-h2-client.patch
+    - patches/0003-Increase-timeout-for-test-h2-client.patch
 
 build:
   number: 0
@@ -28,7 +26,7 @@ build:
     # ed25519 tests are disabled using patch on OSX and WIN 
     # - AWS_CRT_BUILD_DISABLE_LIBCRYPTO_USE_FOR_ED25519_EVERYWHERE=1
 
-  # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.37.0/setup.py#L310
+  # These are also in requirements: https://github.com/awslabs/aws-crt-python/blob/v0.38.0/setup.py#L341
   ignore_run_exports:
     - aws-c-sdkutils
     - aws-c-compression
@@ -44,17 +42,17 @@ requirements:
     - setuptools >=75.3.1
     - s2n {{ s2n }}  # [not win]
     - openssl {{ openssl }}  # [not linux]
-    - aws-c-common 1.0.1
-    - aws-c-sdkutils 1.0.0
-    - aws-c-cal 1.0.0
-    - aws-c-io 1.0.0
-    - aws-checksums 1.0.0
-    - aws-c-compression 1.0.0
-    - aws-c-event-stream 1.0.0
-    - aws-c-http 1.0.0
-    - aws-c-auth 1.0.0
-    - aws-c-mqtt 1.0.0
-    - aws-c-s3 1.2.0
+    - aws-c-common {{ aws_c_common }}
+    - aws-c-sdkutils {{ aws_c_sdkutils }}
+    - aws-c-cal {{ aws_c_cal }}
+    - aws-c-io 1.1.1
+    - aws-checksums 1.0.1
+    - aws-c-compression {{ aws_c_compression }}
+    - aws-c-event-stream {{ aws_c_event_stream }}
+    - aws-c-http 1.1.1
+    - aws-c-auth {{ aws_c_auth }}
+    - aws-c-mqtt 1.1.2
+    - aws-c-s3 1.3.0
   run:
     - python
 
